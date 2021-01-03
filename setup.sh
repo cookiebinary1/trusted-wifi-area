@@ -6,7 +6,7 @@
 # author: cookie.binary@gmail.com
 #
 
-echo -n "Script will be saved to your system (/usr/local/bin). It require root permissions. Is this ok? (Y/n) "
+echo -n "Coping to /usr/local/bin. It require root permissions. Is this ok? (Y/n) "
 read yesno </dev/tty
 
 if [ "x$yesno" = "xy" ] || [ "x$yesno" = "x" ]; then
@@ -16,7 +16,7 @@ if [ "x$yesno" = "xy" ] || [ "x$yesno" = "x" ]; then
     exit 1
   fi
   sudo chmod +x /usr/local/bin/trusted-wifi-area
-  echo -n "Setup auto start after login (into ~/.profile)? Is this ok? (Y/n) "
+  echo -n "Automatic start after login (~/.profile)? Is this ok? (Y/n) "
   read -r yesno </dev/tty
 
   if [ "x$yesno" = "xy" ] || [ "x$yesno" = "x" ]; then
