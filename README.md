@@ -7,6 +7,17 @@ The screensaver will not lock the screen on the listed Wi-Fi networks.
 So far, the implementation is only for Cinnamon (Ubuntu, Linux Mint etc.).
 Other desktop environments are being worked on.
 
+## Download 
+
+Download and unzip by:
+
+```bash
+curl -sS https://codeload.github.com/cookiebinary1/trusted-wifi-area/zip/main > trusted-wifi-area.zip 
+unzip trusted-wifi-area.zip 
+rm trusted-wifi-area.zip
+cd trusted-wifi-area-main
+```
+
 ## Installation (automatically)
 
 Notice: if you want to run script manually, please skip this step.
