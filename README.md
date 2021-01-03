@@ -1,9 +1,9 @@
 # Trusted Wi-Fi Area - Not to Lock Screen (Ubuntu/Mint with Cinnamon)
 
-This is a bash script for dealing with screenshot locking in your home or family's home vs. public areas like school, coffee etc.
+If you don't want to lock the screen saver on a specific Wi-Fi network (at home, etc.), try this solution.
 
 ### How it works?
-The screensaver will not lock the screen on the listed wifi points.
+The screensaver will not lock the screen on the listed Wi-Fi networks.
 So far, the implementation is only for Cinnamon (Ubuntu, Linux Mint etc.).
 Other desktop environments are being worked on.
 
@@ -13,8 +13,8 @@ Notice: if you want to run script manually, please skip entire installation step
 Here are three simple steps. Copy script, set executable permissions and auto startup.
 
 ```bash
-cp trusted-wifi-area.sh /usr/local/bin
-chmod +x /usr/local/bin/trusted-wifi-area.sh
+sudo cp trusted-wifi-area.sh /usr/local/bin
+sudo chmod +x /usr/local/bin/trusted-wifi-area.sh
 echo "trusted-wifi-area.sh &" >> ~/.profile
 ```
 
