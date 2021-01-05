@@ -6,17 +6,17 @@
 # author: cookie.binary@gmail.com
 #
 
-echo -n "Downloading trusted-wifi-area script to /usr/local/bin. It requires root permissions. Is this ok? (Y/n) "
+echo -n "Downloading trusted-wifi-area script to /usr/local/bin. Root permissions are required. Is this ok? (Y/n) "
 read yesno </dev/tty
 
 if [ "x$yesno" = "xy" ] || [ "x$yesno" = "x" ]; then
   # Yes
   if ! curl -sS https://raw.githubusercontent.com/cookiebinary1/trusted-wifi-area/main/trusted-wifi-area.sh | sudo tee /usr/local/bin/trusted-wifi-area > /dev/null; then
-    echo "Coping failed. Setup terminated."
+    echo "Copying failed. Setup terminated."
     exit 1
   fi
   sudo chmod +x /usr/local/bin/trusted-wifi-area
-  echo -n "Automatic start after login (~/.profile)? Is this ok? (Y/n) "
+  echo -n "Set automatic start after each login (~/.profile)? (Y/n) "
   read -r yesno </dev/tty
 
   if [ "x$yesno" = "xy" ] || [ "x$yesno" = "x" ]; then
@@ -26,11 +26,11 @@ if [ "x$yesno" = "xy" ] || [ "x$yesno" = "x" ]; then
     echo "Auto start applied."
   else
     # No
-    echo "Autostart was disabled. Manually start with typing: trusted-wifi-area"
+    echo "Autostart was disabled. Start manually with typing: trusted-wifi-area"
   fi
 
-  echo "Setup was successful."
+  echo "Setup successful."
 else
   # No
-  echo "Setup was terminated."
+  echo "Setup terminated."
 fi
