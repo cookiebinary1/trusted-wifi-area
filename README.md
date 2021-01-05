@@ -2,8 +2,6 @@
 
 If you don't want to lock the screen saver on a specific Wi-Fi network (at home, etc.), try this solution.
 
-Test
-
 ### How it works?
 The screensaver will not lock the screen on the listed Wi-Fi networks.
 So far, the implementation is only for Cinnamon (Ubuntu, Linux Mint etc.).
@@ -36,11 +34,11 @@ HUAWEI-f3rDe
 ```
 
 ## Start
-After the logout / login (restart) the script will run automatically.
+After each restart, the script will run automatically.
 
-To run it manually enter this:
+To run it manually, enter this:
 ```bash
-trusted-wifi-area
+sh trusted-wifi-area.sh
 ```
 
 ## Uninstallation
@@ -62,7 +60,7 @@ echo "trusted-wifi-area &" >> ~/.profile
 ```
 
 ## Contributing
-Pull requests are welcome. If anybody has any ideas, you are welcome.
+Pull requests are welcome. If anybody has any ideas for improvements, you are welcome to contribute.
 
 ### Warning
 Use at your own risk.
