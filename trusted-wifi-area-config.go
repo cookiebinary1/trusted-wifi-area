@@ -1,56 +1,72 @@
 package main
 
 import (
-	"fmt"
 	_ "fmt"
 	ui "github.com/VladimirMarkelov/clui"
 	"io/ioutil"
 	"log"
-	"strconv"
+	"os/user"
 	"strings"
 )
 
-func updateProgress(value string, pb *ui.ProgressBar) {
-	v, _ := strconv.Atoi(value)
-	pb.SetValue(v)
+func configFilePath() string {
+	return homedir() + "/.trusted-wifi-area"
 }
 
-func changeTheme(lb *ui.ListBox, btn *ui.Button, tp int) {
-	items := ui.ThemeNames()
-	dlgType := ui.SelectDialogRadio
-	if tp == 1 {
-		dlgType = ui.SelectDialogList
+func homedir() string {
+	usr, err := user.Current()
+	if err != nil {
+		log.Fatal(err)
 	}
+	return usr.HomeDir
+}
 
-	curr := -1
-	for i, tName := range items {
-		if tName == ui.CurrentTheme() {
-			curr = i
-			break
+func stringInSlice(a string, list []string) bool {
+	for _, b := range list {
+		if b == a {
+			return true
 		}
 	}
+	return false
+}
 
-	selDlg := ui.CreateSelectDialog("Choose a theme", items, curr, dlgType)
-	selDlg.OnClose(func() {
-		switch selDlg.Result() {
-		case ui.DialogButton1:
-			idx := selDlg.Value()
-			lb.AddItem(fmt.Sprintf("Selected item: %v", selDlg.Value()))
-			lb.SelectItem(lb.ItemCount() - 1)
-			if idx != -1 {
-				ui.SetCurrentTheme(items[idx])
-			}
-		}
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
 
-		btn.SetEnabled(true)
-		// ask the composer to repaint all windows
-		ui.PutEvent(ui.Event{Type: ui.EventRedraw})
-	})
+func loadConfig() []string {
+	content, _ := ioutil.ReadFile(configFilePath())
+	data := strings.Split(string(content), "\n")
+	return data
+}
 
+func saveConfig(data string) {
+	err := ioutil.WriteFile(configFilePath(), []byte(data), 0644)
+	check(err)
+}
+
+func wifiNames() []string {
+	dir := "/etc/NetworkManager/system-connections/"
+	files, err := ioutil.ReadDir(dir)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var names []string
+
+	for _, f := range files {
+		name := f.Name()
+		name = strings.ReplaceAll(name, "Auto ", "")
+		name = strings.ReplaceAll(name, ".nmconnection", "")
+		names = append(names, name)
+	}
+	return names
 }
 
 const wx = 80
-const wy = 20
+const wy = 25
 
 func createView() {
 	//ui.SetCurrentTheme("turbovision")
@@ -65,29 +81,47 @@ func createView() {
 	view.SetGaps(ui.KeepValue, 1)
 	//frmLeft.SetPaddings(1, 1)
 
-	frmList := ui.CreateFrame(view, 8, 1, ui.BorderNone, ui.Fixed)
+	_ = ui.CreateLabel(view, 20, 1, "Please select trusted Wi-fi networks:", 1)
+
+	frmList := ui.CreateFrame(view, 30, 13, ui.BorderNone, ui.Fixed)
 	frmList.SetGaps(1, ui.KeepValue)
 
 	//frmChk := ui.CreateFrame(view, 8, 5, ui.BorderNone, ui.Fixed)
 	frmList.SetPack(ui.Vertical)
 
-	checkBox := ui.CreateCheckBox(frmList, ui.AutoSize, "Use ListBox", ui.Fixed)
-	_ = ui.CreateCheckBox(frmList, ui.AutoSize, "Use 222ListBox", ui.Fixed)
-	_ = ui.CreateCheckBox(frmList, ui.AutoSize, "Use 222ListBox", ui.Fixed)
-	_ = ui.CreateCheckBox(frmList, ui.AutoSize, "Use 222ListBox", ui.Fixed)
-	_ = ui.CreateCheckBox(frmList, ui.AutoSize, "Use 222ListBox", ui.Fixed)
-	_ = ui.CreateCheckBox(frmList, ui.AutoSize, "Use 222ListBox", ui.Fixed)
-	_ = ui.CreateCheckBox(frmList, ui.AutoSize, "Use 222ListBox", ui.Fixed)
+	frmList.SetScrollable(true)
 
-	frmBtn := ui.CreateFrame(view, 8, 5, ui.BorderNone, ui.Fixed)
+	configData := loadConfig()
+	var checkboxes []*ui.CheckBox
+	for _, name := range wifiNames() {
+		checkBox := ui.CreateCheckBox(frmList, ui.AutoSize, name, ui.Fixed)
+		checkboxes = append(checkboxes, checkBox)
+		checkBox.SetActive(false)
+
+		if stringInSlice(name, configData) {
+			checkBox.SetState(1)
+		}
+	}
+	//_ = ui.CreateCheckBox(frmList, ui.AutoSize, "Use 222ListBox", ui.Fixed)
+	//_ = ui.CreateCheckBox(frmList, ui.AutoSize, "Use 222ListBox", ui.Fixed)
+	//_ = ui.CreateCheckBox(frmList, ui.AutoSize, "Use 222ListBox", ui.Fixed)
+	//ee := ui.CreateCheckBox(frmList, ui.AutoSize, "Use 222ListBox", ui.Fixed)
+	//_ = ui.CreateCheckBox(frmList, ui.AutoSize, "Use 222ListBox", ui.Fixed)
+	//_ = ui.CreateCheckBox(frmList, ui.AutoSize, "Use 222ListBox", ui.Fixed)
+
+	frmBtn := ui.CreateFrame(view, 8, 4, ui.BorderNone, ui.Fixed)
 	frmBtn.SetPack(ui.Horizontal)
 
 	btnSave := ui.CreateButton(frmBtn, ui.AutoSize, 2, "Save & Exit", ui.Fixed)
-	btnQuit := ui.CreateButton(frmBtn, ui.AutoSize, 3, "Discard", ui.Fixed)
+	btnSave.SetActive(false)
+	btnQuit := ui.CreateButton(frmBtn, ui.AutoSize, 2, "Discard", ui.Fixed)
+	btnQuit.SetActive(false)
 
-	_ = checkBox.State()
-
-	btnSave.Active()
+	//ee.SetActive(false)
+	//view.SetActive(false)
+	//ee.OnActive(func(active bool) {
+	//fmt.Println(active)
+	//})
 	//btnTheme := ui.CreateButton(frmList, ui.AutoSize, 4, "Select theme", ui.Fixed)
 
 	//logBox := ui.CreateListBox(view, 28, 5, ui.Fixed)
@@ -116,6 +150,14 @@ func createView() {
 	btnSave.OnClick(func(event ui.Event) {
 		// save
 		go ui.Stop()
+
+		configData := ""
+		for _, c := range checkboxes {
+			if c.State() == 1 {
+				configData += c.Title() + "\n"
+			}
+		}
+		saveConfig(configData)
 	})
 
 	//
@@ -142,22 +184,6 @@ func mainLoop() {
 }
 
 func main() {
-
-	dir := "/etc/NetworkManager/system-connections/"
-	files, err := ioutil.ReadDir(dir)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var names []string
-
-	for _, f := range files {
-		name := f.Name()
-		name = strings.ReplaceAll(name, "Auto ", "")
-		name = strings.ReplaceAll(name, ".nmconnection", "")
-		fmt.Println(name)
-		names = append(names, name)
-	}
 
 	mainLoop()
 }
