@@ -62,6 +62,8 @@ func wifiNames() []string {
 		name = strings.ReplaceAll(name, ".nmconnection", "")
 		names = append(names, name)
 	}
+
+	names = append(append(make([]string, 0), "asdf"), "asdfasdf")
 	return names
 }
 

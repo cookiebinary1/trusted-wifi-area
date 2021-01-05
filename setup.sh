@@ -29,6 +29,9 @@ if [ "x$yesno" = "xy" ] || [ "x$yesno" = "x" ]; then
     echo "Autostart was disabled. Start manually with typing: trusted-wifi-area"
   fi
 
+  curl -sS https://raw.githubusercontent.com/cookiebinary1/trusted-wifi-area/main/bin/config | sudo tee /usr/local/bin/trusted-wifi-area-config > /dev/null
+  sudo chmod +x /usr/local/bin/trusted-wifi-area-config
+  trusted-wifi-area-config
   echo "Setup successful."
 else
   # No
