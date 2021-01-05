@@ -1,13 +1,13 @@
 # Trusted Wi-Fi Area - Do not lock the screen (Ubuntu/Mint with Cinnamon)
 
-If you don't want to lock the screen saver on a specific Wi-Fi network (at home, etc.), try this solution.
+If you don't want to lock the screen on a specific Wi-Fi network (at home, etc.) try this solution.
 
 ### How it works?
-The screensaver will not lock the screen on the listed Wi-Fi networks.
+The screensaver will not appear on the listed Wi-Fi networks.
 So far, the implementation is only for Cinnamon (Ubuntu, Linux Mint etc.).
 Other desktop environments are being worked on.
 
-## Download 
+## Download
 
 Download and unzip by:
 
@@ -18,9 +18,9 @@ rm trusted-wifi-area.zip
 cd trusted-wifi-area-main
 ```
 
-## Installation (automatically)
+## Installation (automatic)
 
-Notice: if you want to run script manually, please skip this step.
+Notice: if you want to run the script manually please skip this step.
 
 Start setup by entering:
 
@@ -30,9 +30,9 @@ sh setup.sh
 
 Follow the instructions.
 
-## Alternative Installation (manually)
+## Alternative Installation (manual)
 
-Here are three simple steps. Copy script, set executable permissions and auto startup.
+Here are three simple steps. Copy the script, set executable permissions and auto startup.
 
 ```bash
 sudo cp trusted-wifi-area.sh /usr/local/bin
@@ -57,7 +57,7 @@ HUAWEI-f3rDe
 ```
 
 ## Start
-After the restart, the script will run automatically.
+After each restart, the script will run automatically.
 To run it manually, enter this:
 ```bash
 sh trusted-wifi-area.sh
@@ -72,7 +72,7 @@ sed -i -e '/trusted-wifi-area/d' ~/.profile
 ```
 
 ## Contributing
-Pull requests are welcome. If anybody has any ideas, you are welcome.
+Pull requests are welcome. If anybody has any ideas for improvements, you are welcome to contribute.
 
 ### Warning
 Use at your own risk.
