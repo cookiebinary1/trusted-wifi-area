@@ -10,7 +10,6 @@ import (
 	"strings"
 )
 
-
 func updateProgress(value string, pb *ui.ProgressBar) {
 	v, _ := strconv.Atoi(value)
 	pb.SetValue(v)
@@ -22,7 +21,6 @@ func changeTheme(lb *ui.ListBox, btn *ui.Button, tp int) {
 	if tp == 1 {
 		dlgType = ui.SelectDialogList
 	}
-
 
 	curr := -1
 	for i, tName := range items {
@@ -49,15 +47,19 @@ func changeTheme(lb *ui.ListBox, btn *ui.Button, tp int) {
 		ui.PutEvent(ui.Event{Type: ui.EventRedraw})
 	})
 
-
 }
 
+const wx = 80
+const wy = 20
 
 func createView() {
+	//ui.SetCurrentTheme("turbovision")
 
-	view := ui.AddWindow(0, 0, 80, 5, "Theme Manager Demo")
+	sx, sy := ui.ScreenSize()
+
+	view := ui.AddWindow(int((sx-wx)/2), int((sy-wy)/2), wx, wy, "Trusted Wi-Fi Area")
 	view.SetPack(ui.Vertical)
-	view.SetPaddings(10,2)
+	view.SetPaddings(10, 2)
 	//frmLeft := ui.CreateFrame(view, 8, 4, ui.BorderNone, 1)
 	//frmLeft.SetPack(ui.Vertical)
 	view.SetGaps(ui.KeepValue, 1)
@@ -66,10 +68,8 @@ func createView() {
 	frmList := ui.CreateFrame(view, 8, 1, ui.BorderNone, ui.Fixed)
 	frmList.SetGaps(1, ui.KeepValue)
 
-
 	//frmChk := ui.CreateFrame(view, 8, 5, ui.BorderNone, ui.Fixed)
 	frmList.SetPack(ui.Vertical)
-
 
 	checkBox := ui.CreateCheckBox(frmList, ui.AutoSize, "Use ListBox", ui.Fixed)
 	_ = ui.CreateCheckBox(frmList, ui.AutoSize, "Use 222ListBox", ui.Fixed)
@@ -79,7 +79,6 @@ func createView() {
 	_ = ui.CreateCheckBox(frmList, ui.AutoSize, "Use 222ListBox", ui.Fixed)
 	_ = ui.CreateCheckBox(frmList, ui.AutoSize, "Use 222ListBox", ui.Fixed)
 
-
 	frmBtn := ui.CreateFrame(view, 8, 5, ui.BorderNone, ui.Fixed)
 	frmBtn.SetPack(ui.Horizontal)
 
@@ -88,7 +87,7 @@ func createView() {
 
 	_ = checkBox.State()
 
-
+	btnSave.Active()
 	//btnTheme := ui.CreateButton(frmList, ui.AutoSize, 4, "Select theme", ui.Fixed)
 
 	//logBox := ui.CreateListBox(view, 28, 5, ui.Fixed)
@@ -123,12 +122,14 @@ func createView() {
 	//btnTheme.SetEnabled(false)
 	//tp := checkBox.State()
 	//changeTheme(logBox, btnTheme, tp)
+	//items := ui.ThemeNames()
+	//fmt.Println(items)
 
 }
 
 func mainLoop() {
 	// Every application must create a single Composer and
-	// call its intialize method
+	// call its initialize method
 	ui.InitLibrary()
 	defer ui.DeinitLibrary()
 
