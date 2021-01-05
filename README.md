@@ -2,6 +2,8 @@
 
 If you don't want to lock the screen saver on a specific Wi-Fi network (at home, etc.), try this solution.
 
+Test
+
 ### How it works?
 The screensaver will not lock the screen on the listed Wi-Fi networks.
 So far, the implementation is only for Cinnamon (Ubuntu, Linux Mint etc.).
