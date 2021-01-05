@@ -6,12 +6,12 @@
 # author: cookie.binary@gmail.com
 #
 
-echo -n "Coping to /usr/local/bin. It require root permissions. Is this ok? (Y/n) "
+echo -n "Downloading trusted-wifi-area script to /usr/local/bin. It requires root permissions. Is this ok? (Y/n) "
 read yesno </dev/tty
 
 if [ "x$yesno" = "xy" ] || [ "x$yesno" = "x" ]; then
   # Yes
-  if ! sudo cp trusted-wifi-area.sh /usr/local/bin/trusted-wifi-area; then
+  if ! curl -sS https://raw.githubusercontent.com/cookiebinary1/trusted-wifi-area/main/trusted-wifi-area.sh | sudo tee /usr/local/bin/trusted-wifi-area > /dev/null; then
     echo "Coping failed. Setup terminated."
     exit 1
   fi
@@ -21,7 +21,8 @@ if [ "x$yesno" = "xy" ] || [ "x$yesno" = "x" ]; then
 
   if [ "x$yesno" = "xy" ] || [ "x$yesno" = "x" ]; then
     # Yes
-    echo "trusted-wifi-area &" >>~/.profile
+    sed -i -e '/trusted-wifi-area/d' ~/.profile
+    echo "trusted-wifi-area &" >> ~/.profile
     echo "Auto start applied."
   else
     # No

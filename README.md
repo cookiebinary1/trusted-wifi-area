@@ -7,38 +7,15 @@ The screensaver will not lock the screen on the listed Wi-Fi networks.
 So far, the implementation is only for Cinnamon (Ubuntu, Linux Mint etc.).
 Other desktop environments are being worked on.
 
-## Download 
-
-Download and unzip by:
-
-```bash
-curl -sS https://codeload.github.com/cookiebinary1/trusted-wifi-area/zip/main > trusted-wifi-area.zip 
-unzip trusted-wifi-area.zip 
-rm trusted-wifi-area.zip
-cd trusted-wifi-area-main
-```
-
 ## Installation (automatically)
 
-Notice: if you want to run script manually, please skip this step.
-
-Start setup by entering:
+Enter following command in terminal:
 
 ```bash
-sh setup.sh
+curl -sS https://raw.githubusercontent.com/cookiebinary1/trusted-wifi-area/main/setup.sh | sh
 ```
 
-Follow the instructions.
-
-## Alternative Installation (manually)
-
-Here are three simple steps. Copy script, set executable permissions and auto startup.
-
-```bash
-sudo cp trusted-wifi-area.sh /usr/local/bin
-sudo chmod +x /usr/local/bin/trusted-wifi-area
-echo "trusted-wifi-area.sh &" >> ~/.profile
-```
+Setup will start. Follow the instructions.
 
 ## Configuration
 
@@ -57,10 +34,11 @@ HUAWEI-f3rDe
 ```
 
 ## Start
-After the restart, the script will run automatically.
-To run it manually, enter this:
+After the logout / login (restart) the script will run automatically.
+
+To run it manually enter this:
 ```bash
-sh trusted-wifi-area.sh
+trusted-wifi-area
 ```
 
 ## Uninstallation
@@ -69,6 +47,16 @@ Remove script itself and its call from `.profile`:
 ```bash
 sudo rm /usr/local/bin/trusted-wifi-area
 sed -i -e '/trusted-wifi-area/d' ~/.profile
+```
+
+## Alternative Installation (manually)
+
+Here are several simple steps. Download the script to target folder, set permission to execute and setup auto start.
+
+```bash
+curl -sS https://raw.githubusercontent.com/cookiebinary1/trusted-wifi-area/main/trusted-wifi-area.sh | sudo tee /usr/local/bin/trusted-wifi-area > /dev/null
+sudo chmod +x /usr/local/bin/trusted-wifi-area
+echo "trusted-wifi-area &" >> ~/.profile
 ```
 
 ## Contributing
